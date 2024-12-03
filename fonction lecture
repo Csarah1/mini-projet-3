@@ -1,0 +1,36 @@
+import os
+def read_config_file (config_path)
+"""
+read the configuration file and return list
+parameters :
+----------
+config_path: str, path to the configuration file
+return :
+-------
+list : list file's lines
+"""
+config_path = C:\Users\USER\Documents\rules_gr_11.txt
+ # Verify if the file exists 
+    if not os.path.exists(config_path):
+        print(f"Erreur : the configuration file '{config_path}' is not found.")
+        return []
+    
+    # Ouvrir le fichier en mode lecture
+    file = open(config_path, "r")
+    
+    # Lire toutes les lignes du fichier
+    lines = file.readlines()
+    
+    # Fermer le fichier après la lecture
+    file.close()
+    
+   # Nettoyer et préparer les lignes (enlever les retours à la ligne et ignorer les lignes vides)
+    lignes_nettoyees = []  # Nouvelle variable
+    for ligne in lignes:
+        # Utiliser strip() pour enlever les espaces et retours à la ligne
+        ligne = ligne.strip()  # Supprime les espaces au début et à la fin, ainsi que les retours à la ligne
+        if ligne:  # Vérifie si la ligne n'est pas vide après nettoyage
+            lignes_nettoyees.append(ligne)  # Ajoute la ligne nettoyée à la liste
+
+    # Retourner les lignes nettoyées
+    return lignes_nettoyees

@@ -1,45 +1,57 @@
 # Open the file in write mode
 file = open("rules_gr_11.txt", "w")
 
-# Writing the global configuration
-file.write("# Configuration globale\n")
+# Écrire la configuration globale
+file.write("# Global Configuration\n")
 file.write("input_directory=C:/Users/Utilisateur/Documents\n\n")
-file.write("# Images - France\n")
-file.write("output_directory=pictures/France\n")
+
+# Images
+file.write("# Category: Images - France\n")
+file.write("output_directory=images/Images_France\n")
 file.write("extension=jpeg\n")
 file.write("min_size=500000\n")
 file.write("name_contains=FR\n\n")
-file.write("# Images - Belgique\n")
-file.write("output_directory=pictures/Belgique\n")
+
+file.write("# Category: Images - Belgique\n")
+file.write("output_directory=images/Images_Belgique\n")
 file.write("extension=jpeg\n")
 file.write("min_size=500000\n")
 file.write("name_contains=BE\n\n")
-file.write("# Images - other\n")
-file.write("output_directory=pictures/other\n")
+
+file.write("# Category: Images - Other\n")
+file.write("output_directory=images/Images_Other\n")
 file.write("extension=jpeg\n")
 file.write("min_size=500000\n\n")
-file.write("# Videos - Namur\n")
-file.write("output_directory=videos/Namur\n")
+
+# Videos
+file.write("# Category: Videos - Namur\n")
+file.write("output_directory=videos/Videos_Namur\n")
 file.write("extension=mp4\n")
 file.write("name_contains=NMR\n")
 file.write("max_size=500000000\n\n")
-file.write("# Videos - other\n")
-file.write("output_directory=videos/other\n")
+
+file.write("# Category: Videos - Other\n")
+file.write("output_directory=videos/Videos_Other\n")
 file.write("extension=mp4\n")
 file.write("max_size=500000000\n\n")
-file.write("# Cours - Programmation\n")
-file.write("output_directory=courses/Programmation\n")
+
+# Courses
+file.write("# Category: Courses - Programming\n")
+file.write("output_directory=courses/Courses_Programmation\n")
 file.write("extension=pdf,docx,txt\n")
 file.write("name_contains=intro_prog\n")
 file.write("max_size=10000000\n\n")
-file.write("# Autres Cours\n")
-file.write("output_directory=other_courses\n")
+
+file.write("# Category: Other Courses\n")
+file.write("output_directory=courses/Courses_Other\n")
 file.write("extension=pdf,docx,txt\n")
 file.write("max_size=10000000\n\n")
-file.write("# Fin du fichier\n\n")
+
+# Fin du fichier
 file.write("---END---\n")
-# Close the file
+
+# Fermer le fichier
 file.close()
 
-print("file rules_gr_11.txt successfully written.")
+print("Le fichier 'rules_gr_11.txt' a été écrit avec succès.")
 

@@ -29,7 +29,7 @@ def read_config_file(config_path):
     cleaned_lines = []
     for line in lines:
         line = line.strip()  
-        if line and line[0] != '#' : 
+        if line and line[0] != '#' and line != '---END---': 
             cleaned_lines.append(line)
 
     return cleaned_lines

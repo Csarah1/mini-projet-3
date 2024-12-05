@@ -1,54 +1,54 @@
 # Open the file in write mode
 file = open("rules_gr_11.txt", "w")
 
-# Écrire la configuration globale
 file.write("# Global Configuration\n")
-file.write("input_directory=C:/Users/Utilisateur/Documents\n\n")
 
 # Images
 file.write("# Category: Images - France\n")
-file.write("output_directory=images/Images_France\n")
+file.write("output_directory=Stored_file/Images/Images_France\n")
 file.write("extension=jpeg\n")
 file.write("min_size=500000\n")
 file.write("name_contains=FR\n\n")
 
 file.write("# Category: Images - Belgique\n")
-file.write("output_directory=images/Images_Belgique\n")
+file.write("output_directory=Stored_file/Images/Images_Belgique\n")
 file.write("extension=jpeg\n")
 file.write("min_size=500000\n")
 file.write("name_contains=BE\n\n")
 
 file.write("# Category: Images - Other\n")
-file.write("output_directory=images/Images_Other\n")
+file.write("output_directory=Stored_file/Images/Images_Other\n")
 file.write("extension=jpeg\n")
 file.write("min_size=500000\n\n")
 
 # Videos
 file.write("# Category: Videos - Namur\n")
-file.write("output_directory=videos/Videos_Namur\n")
+file.write("output_directory=Stored_file/Videos/Videos_Namur\n")
 file.write("extension=mp4\n")
 file.write("name_contains=NMR\n")
 file.write("max_size=500000000\n\n")
 
 file.write("# Category: Videos - Other\n")
-file.write("output_directory=videos/Videos_Other\n")
+file.write("output_directory=Stored_file/Videos/Videos_Other\n")
 file.write("extension=mp4\n")
 file.write("max_size=500000000\n\n")
 
 # Courses
 file.write("# Category: Courses - Programming\n")
-file.write("output_directory=courses/Courses_Programmation\n")
+file.write("output_directory=Stored_file/Courses/Courses_Programmation\n")
 file.write("extension=pdf,docx,txt\n")
 file.write("name_contains=intro_prog\n")
 file.write("max_size=10000000\n\n")
 
 file.write("# Category: Other Courses\n")
-file.write("output_directory=courses/Courses_Other\n")
+file.write("output_directory=Stored_file/Courses/Courses_Other\n")
 file.write("extension=pdf,docx,txt\n")
 file.write("max_size=10000000\n\n")
 
+# Fin du fichier
 file.write("---END---\n")
 
+# Fermer le fichier
 file.close()
 
 print("the file 'rules_gr_11.txt' is written successfully.")

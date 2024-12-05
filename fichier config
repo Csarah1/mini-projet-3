@@ -1,41 +1,53 @@
 # Open the file in write mode
 file = open("rules_gr_11.txt", "w")
 
-# Writing data
+# Writing the global configuration
+file.write("# Configuration globale\n")
+file.write("input_directory=C:/Users/Utilisateur/Documents\n\n")
 
-file.write("pictures/France\n")
+file.write("# Images - France\n")
+file.write("output_directory=pictures/France\n")
 file.write("extension=jpeg\n")
 file.write("min_size=500000\n")
 file.write("name_contains=FR\n\n")
 
-file.write("pictures/Belgique\n")
+file.write("# Images - Belgique\n")
+file.write("output_directory=pictures/Belgique\n")
 file.write("extension=jpeg\n")
 file.write("min_size=500000\n")
 file.write("name_contains=BE\n\n")
 
-file.write("pictures/Autre\n")
+file.write("# Images - Autres\n")
+file.write("output_directory=pictures/Autre\n")
 file.write("extension=jpeg\n")
 file.write("min_size=500000\n\n")
 
-file.write("videos/Namur\n")
+file.write("# Vidéos - Namur\n")
+file.write("output_directory=videos/Namur\n")
 file.write("extension=mp4\n")
 file.write("name_contains=NMR\n")
 file.write("max_size=500000000\n\n")
 
-file.write("videos/Autres\n")
+file.write("# Vidéos - Autres\n")
+file.write("output_directory=videos/Autres\n")
 file.write("extension=mp4\n")
 file.write("max_size=500000000\n\n")
 
-file.write("courses/Programmation\n")
+file.write("# Cours - Programmation\n")
+file.write("output_directory=courses/Programmation\n")
 file.write("extension=pdf,docx,txt\n")
 file.write("name_contains=intro_prog\n")
 file.write("max_size=10000000\n\n")
 
-file.write("other_courses\n")
+file.write("# Autres Cours\n")
+file.write("output_directory=other_courses\n")
 file.write("extension=pdf,docx,txt\n")
 file.write("max_size=10000000\n\n")
 
+file.write("# Fin du fichier\n")
 file.write("--END--\n")
 
 # Close the file
 file.close()
+
+print("file rules_gr_11.txt successfully written.")

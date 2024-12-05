@@ -1,5 +1,5 @@
 import os
-def read_config_file(config_path):
+def file_reader(config_path):
     """
     Read the configuration file and return a list of lines.
     
@@ -30,7 +30,7 @@ def read_config_file(config_path):
 
     return cleaned_lines
 
-def organize_config_file(cleaned_lines):
+def config_file_organizer(cleaned_lines):
     """
     Organize configuration data.
 
@@ -78,11 +78,11 @@ def organize_config_file(cleaned_lines):
 config_path = "rules_gr_11.txt"
 
 # Lire et nettoyer les lignes
-cleaned_lines = read_config_file(config_path)
+cleaned_lines = file_reader(config_path)
 
 # Organiser les données
 if cleaned_lines:
-    config_data = organize_config_file(cleaned_lines)
+    config_data = config_file_organizer(cleaned_lines)
 
     # Afficher les blocs
     for block in config_data:

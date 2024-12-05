@@ -2,7 +2,7 @@ import os
 
 def read_config_file(config_path):
     """
-    Read the configuration file and return a list of lines.
+    Read the configuration file and return a list of lines without using 'with'.
     
     Parameters:
     ----------
@@ -12,27 +12,22 @@ def read_config_file(config_path):
     -------
     list: list of the file's cleaned lines
     """
-    # Verify if the file exists
-    if not os.path.exists(config_path):
-        print(f"Error: The configuration file '{config_path}' is not found.")
+    try:
+        file = open(config_path, "r")
+        lines = file.readlines()
+        file.close()
+    except FileNotFoundError:
+        print(f"Error: The file '{config_path}' was not found.")
         return []
 
-    # Open the file in read mode
-    file = open(config_path, "r")
-    
-    # Read all lines of the file
-    lines = file.readlines()
-    
-    file.close()
-
-    # Clean and remove newlines and ignore empty lines
     cleaned_lines = []
     for line in lines:
-        line = line.strip()  
-        if line and line[0] != '#' and line != '---END---': 
+        line = line.strip()
+        if line and not line.startswith("#"):  
             cleaned_lines.append(line)
 
     return cleaned_lines
+
 
 # Configuration file path
 config_path = r"C:\Users\USER\Documents\rules_gr_11.txt"

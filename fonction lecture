@@ -23,24 +23,19 @@ def read_config_file(config_path):
     # Read all lines of the file
     lines = file.readlines()
     
-    # Close the file after reading
     file.close()
 
     # Clean and remove newlines and ignore empty lines
     cleaned_lines = []
     for line in lines:
         line = line.strip()  
-        if line:  # Only add non-empty lines
+        if line and line[0] != '#' : 
             cleaned_lines.append(line)
 
-    # Return the cleaned lines
     return cleaned_lines
 
 # Spécifie le chemin du fichier de configuration
 config_path = r"C:\Users\USER\Documents\rules_gr_11.txt"
 
-# Appeler la fonction pour obtenir les lignes nettoyées
 cleaned_lines = read_config_file(config_path)
-
-# Afficher les lignes nettoyées
 print(cleaned_lines)

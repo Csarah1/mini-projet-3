@@ -1,34 +1,44 @@
-data = {
-        "extensions": [],
-        "max_size": {},
-        "path": {}
-    }
+def organize_config_file(cleaned_lines):
+    """
+    Organize configuration data.
 
-    # Traiter chaque ligne
+    Parameters:
+    ----------
+    cleaned_lines: list
+        List of cleaned lines from the configuration file.
+
+    Returns:
+    -------
+    list
+        A list of dictionaries representing each block of configuration.
+    """
+    data = []  
+    block = {}  
+
     for line in cleaned_lines:
-        line = line.strip()  
-        if line : 
-            if "extensions" in line:
-                data["extensions"] = line.split("=")[1].split(",")
-            elif "max_size" in line:
-                # Extraire la taille maximale pour chaque extension
-                part, size = line.split("=")
-                extension = part.split("/")[1]
-                data["max_size"][extension] = int(size)
-            elif "path" in line:
-                # Extraire le chemin pour chaque extension
-                part, path = line.split("=")
-                extension = part.split("/")[1]
-                data["path"][extension] = path
+        if line.startswith("output_directory"):  
+            if block:  
+                data.append(block)
+                block = {}  
+            
+    # Traiter les paires clé=valeur
+        if "=" in line:
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip()
+
+    # Gérer les conversions appropriées
+            if key in ("min_size", "max_size"):
+                block[key] = int(value)  # Convertir en entier
+            elif key == "name_contains":
+                block[key] = value.split(",")  # Diviser en liste
+            elif key == "extension" and "," in value:
+                block[key] = value.split(",")  # Gérer les extensions multiples
+            else:
+                block[key] = value  # Autres valeurs telles quelles
+
+    # Ajouter le dernier bloc
+    if block:
+        data.append(block)
 
     return data
-
-
-# Spécifie le chemin du fichier de configuration
-config_path = r"C:\Users\USER\Documents\rules_gr_11.txt"
-
-# Appeler la fonction pour obtenir les données structurées
-config_data = read_config_file(config_path)
-
-# Afficher les données structurées
-print(config_data)

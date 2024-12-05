@@ -51,5 +51,5 @@ file.write("---END---\n")
 
 file.close()
 
-print("Le fichier 'rules_gr_11.txt' is written successfully.")
+print("the file 'rules_gr_11.txt' is written successfully.")
 

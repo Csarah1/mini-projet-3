@@ -47,11 +47,9 @@ file.write("output_directory=courses/Courses_Other\n")
 file.write("extension=pdf,docx,txt\n")
 file.write("max_size=10000000\n\n")
 
-# Fin du fichier
 file.write("---END---\n")
 
-# Fermer le fichier
 file.close()
 
-print("Le fichier 'rules_gr_11.txt' a été écrit avec succès.")
+print("Le fichier 'rules_gr_11.txt' is written successfully.")
 

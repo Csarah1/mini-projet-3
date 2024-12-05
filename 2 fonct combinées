@@ -1,0 +1,91 @@
+import os
+def read_config_file(config_path):
+    """
+    Read the configuration file and return a list of lines.
+    
+    Parameters:
+    ----------
+    config_path: (str) path to the configuration file
+    
+    Return:
+    -------
+    list: [] list of the file's cleaned lines
+    """
+    try:
+
+        file = open(config_path, "r")
+        lines = file.readlines()
+        file.close()
+    except :
+        print(f"Error: The file '{config_path}' was not found.")
+        return []
+
+    # clean the lines
+    cleaned_lines = []
+    for line in lines:
+        line = line.strip()
+    # Ignore comments and empty lines
+        if line and not line.startswith("#"):  
+            cleaned_lines.append(line)
+
+    return cleaned_lines
+
+def organize_config_file(cleaned_lines):
+    """
+    Organize configuration data.
+
+    Parameters:
+    ----------
+    cleaned_lines: list
+        List of cleaned lines from the configuration file.
+
+    Returns:
+    -------
+    list
+        A list of dictionaries representing each block of configuration.
+    """
+    data = []  
+    block = {}  
+
+    for line in cleaned_lines:
+        if line.startswith("output_directory"):  
+            if block:  
+                data.append(block)
+                block = {}  
+            
+    # Traiter les paires clé=valeur
+        if "=" in line:
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip()
+
+    # Gérer les conversions appropriées
+            if key in ("min_size", "max_size"):
+                block[key] = int(value)  # Convertir en entier
+            elif key == "name_contains":
+                block[key] = value.split(",")  # Diviser en liste
+            elif key == "extension" and "," in value:
+                block[key] = value.split(",")  # Gérer les extensions multiples
+            else:
+                block[key] = value  # Autres valeurs telles quelles
+
+    # Ajouter le dernier bloc
+    if block:
+        data.append(block)
+
+    return data
+# Spécifiez le chemin de votre fichier
+config_path = "rules_gr_11.txt"
+
+# Lire et nettoyer les lignes
+cleaned_lines = read_config_file(config_path)
+
+# Organiser les données
+if cleaned_lines:
+    config_data = organize_config_file(cleaned_lines)
+
+    # Afficher les blocs
+    for block in config_data:
+        print(block)
+else:
+    print("No valid lines found in the configuration file.")

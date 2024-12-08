@@ -1,0 +1,135 @@
+import os
+def file_reader(config_path : str) -> list:
+    """
+    This function read the configuration file and returns a list of lines.
+    
+    Parameters:
+    ----------
+    config_path: (str) path to the configuration file
+    
+    Return:
+    -------
+    list: [] list of the file's cleaned lines
+    """
+    try:
+
+        file = open(config_path, "r")
+        lines = file.readlines()
+        file.close()
+    except FileNotFoundError:
+        print(f"Error: The file '{config_path}' was not found.")
+        return []
+    except:
+        print("An error occurred while reading the file.")
+        return []
+
+    cleaned_lines = []
+    for line in lines:
+        line = line.strip()
+
+        if line and not line.startswith("#") and not line.startswith("---END---"):  
+            cleaned_lines.append(line)
+
+    return cleaned_lines
+
+def config_file_organizer(cleaned_lines: list) -> dict:
+    """
+    Organize configuration data into a dictionary.
+    """
+    config_data = {}
+    current_key = None
+
+    for line in cleaned_lines:
+        if line.startswith("Sub_dir"):
+            current_key = line.split("=", 1)[1].strip()
+            config_data[current_key] = {}
+        elif "=" in line and current_key:
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip()
+
+            if key in ("min_size", "max_size"):
+                config_data[current_key][key] = int(value)
+            elif key == "name_contains":
+                config_data[current_key][key] = value.split(",")
+            elif key == "extension":
+                config_data[current_key][key] = value.split(",")
+            else:
+                config_data[current_key][key] = value
+
+    return config_data
+
+def validate_files(source_dir: str, config_data: dict) -> dict:
+    """
+    Validate files in the source directory against the configuration rules.
+
+    Parameters:
+    ----------
+    source_dir: (str) path to the source directory
+    config_data: (dict) dictionary of configuration data
+    
+    Return:
+    -------
+    dict: Validation results of files, keyed by file name.
+    """
+    validation_results = {}
+
+    def recursive_search(directory: str):
+        # Explore files and subdirectories in the current directory
+        try:
+            entries = os.listdir(directory)
+        except PermissionError:
+            return  # If permission is denied, exit the recursion
+
+        for entry in entries:
+            entry_path = os.path.join(directory, entry)
+            if os.path.isdir(entry_path):
+                # Recursively process subdirectories
+                recursive_search(entry_path)
+            elif os.path.isfile(entry_path):
+                # Process files
+                file_size = os.path.getsize(entry_path)
+                file_name = os.path.basename(entry)
+                file_extension = file_name.split('.')[-1] if '.' in file_name else ''
+
+                # Iterate through the configuration data and validate
+                for sub_dir, rules in config_data.items():
+                    is_valid = True
+
+                    # Check extension
+                    if 'extension' in rules and file_extension not in rules['extension']:
+                        is_valid = False
+
+                    # Check if the name contains the required substrings
+                    if 'name_contains' in rules and not any(substring in file_name for substring in rules['name_contains']):
+                        is_valid = False
+
+                    # Check file size limits (min and max)
+                    if 'min_size' in rules and file_size < rules['min_size']:
+                        is_valid = False
+                    if 'max_size' in rules and file_size > rules['max_size']:
+                        is_valid = False
+
+                    # If all conditions match, file is valid for this category
+                    if is_valid:
+                        validation_results[file_name] = {
+                            "path": entry_path,
+                            "valid": True,
+                            "category": sub_dir
+                        }
+
+    # Start the recursive search from the root directory
+    recursive_search(source_dir)
+
+    return validation_results
+
+# Example usage:
+config_path = 'rules_gr_11.txt'  # Replace with your actual config path
+source_dir = 'C:\\Users\\USER\\Desktop\\SRC'  # Replace with your actual source directory
+
+cleaned_lines = file_reader(config_path)
+config_data = config_file_organizer(cleaned_lines)
+validation_results = validate_files(source_dir, config_data)
+
+for file, result in validation_results.items():
+    print(f"Fichier : {file}, Catégorie : {result['category']}, Valide : {result['valid']}, Chemin : {result['path']}")
